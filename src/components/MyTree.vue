@@ -1,7 +1,7 @@
 <template>
-    <el-tree :data="data" :props="defaultProps" accordion @node-click="handleNodeClick" />
+    <el-tree :data="data" :props="defaultProps" indent=16 accordion @node-click="handleNodeClick" />
 </template>
-  
+
 <script lang="ts" setup>
 
 interface Tree {
@@ -10,7 +10,11 @@ interface Tree {
 }
 
 const handleNodeClick = (data: Tree) => {
+    console.log('click node')
     console.log(data)
+    console.log(data.label)
+    console.log(data.$treeNodeId)
+
 }
 
 const data: Tree[] = [
@@ -30,9 +34,6 @@ const data: Tree[] = [
                 label: 'vmiotman使用说明',
             },
         ]
-    },
-    {
-        label: '快速上手',
     },
     {
         label: 'Python基础',
@@ -98,7 +99,7 @@ const data: Tree[] = [
                 label: '加密函数'
             },
             {
-                label: 'vmiot可以激活的内置全局对象'
+                label: '可以激活的内置全局对象'
             },
         ],
     },
@@ -333,9 +334,26 @@ const data: Tree[] = [
         ]
     },
 ]
+
 const defaultProps = {
     children: 'children',
     label: 'label',
 }
 </script>
+
+<style scoped>
+.el-tree {
+    width: 18vw;
+    height: 100%;
+    background-color: #b3eeeb;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 18px;
+    border-radius: var(--el-border-radius-round, 0px);
+
+}
+
+::v-deep .el-tree-node__children {
+    border: 1px solid rgb(185, 178, 42, 0.7);
+}
+</style>
   
