@@ -5,6 +5,32 @@ let currentComponent = ref(null)
 let myComponentPath = "./views/1-1.vue"
 let currentClass = ref('github')
 
+const options = [
+  {
+    value: 'github',
+    label: 'github'
+  },
+  {
+    value: 'orangeHeart',
+    label: 'orangeHeart'
+  },
+  {
+    value: 'night',
+    label: 'night'
+  },
+  {
+    value: 'inside',
+    label: 'inside'
+  },
+  {
+    value: 'newSprint',
+    label: 'newSprint'
+  },
+  {
+    value: 'simpleWHite',
+    label: 'simpleWhite'
+  }
+]
 
 onMounted(async () => {
   const { default: myComponent } = await import(myComponentPath)
@@ -19,9 +45,15 @@ async function handleChange(index) {
   console.log(currentComponent.value)
   console.log(myComponentPath)
   console.log(index)
+  console.log(currentClass.value)
 
   const { default: myComponent } = await import(myComponentPath)
   currentComponent.value = myComponent
+}
+
+function toTop() {
+  console.log("click to top")
+  document.getElementById("content").scrollTop = 0;
 }
 
 </script>
@@ -89,18 +121,18 @@ async function handleChange(index) {
 
         <!-- 工具栏 -->
         <el-header>
-          <div class="toolbar">
-            <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
-            <el-button type="primary" icon="el-icon-share" size="mini">分享</el-button>
-            <el-button type="primary" icon="el-icon-download" size="mini">下载</el-button>
-            <el-button type="primary" icon="el-icon-printer" size="mini">打印</el-button>
-            <el-button type="primary" icon="el-icon-setting" size="mini">设置</el-button>
+          <div class="toolbar" style="position:relative;width: 100%;">
+            <el-select v-model="currentClass" style="width:125px">
+              <el-option v-for="item in options" :label="item.label" :value="item.value"></el-option>
+            </el-select>
+            <el-button @click="toTop" style="position: absolute; right: 5%;">toTop</el-button>
           </div>
         </el-header>
 
         <!-- 内容展示 -->
-        <el-main>
-          <component :is="currentComponent" :class="currentClass" />
+        <el-main id="content">
+          <!-- <component :is="currentComponent" :class="currentClass.value" /> -->
+          <component :is="currentComponent" class="nignt" />
         </el-main>
 
       </el-container>
@@ -116,14 +148,14 @@ async function handleChange(index) {
   background-color: var(--el-color-primary-light-7);
   color: var(--el-text-color-primary);
   height: 10vh;
-  width: 80vw;
+  width: 85vw;
 }
 
 .layout-container-demo .el-aside {
   color: var(--el-text-color-primary);
   background: var(--el-color-primary-light-8);
   height: 100vh;
-  width: 20vw;
+  width: 15vw;
 }
 
 .layout-container-demo .el-menu {
@@ -132,8 +164,8 @@ async function handleChange(index) {
 
 .layout-container-demo .el-main {
   /* padding: 0; */
-  height: 90vh;
-  width: 80vw;
+  /* height: 90vh; */
+  /* width: 85vw; */
 }
 
 .layout-container-demo .toolbar {
