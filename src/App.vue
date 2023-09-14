@@ -1,33 +1,168 @@
 <script setup>
-import MyTree from './components/MyTree.vue'
+import { onMounted, ref } from 'vue'
+
+let currentComponent = ref(null)
+let myComponentPath = "./views/1-1.vue"
+let currentClass = ref('github')
+
+
+onMounted(async () => {
+  const { default: myComponent } = await import(myComponentPath)
+  currentComponent.value = myComponent
+})
+
+async function handleChange(index) {
+
+  // myComponentPath = "./views/" + index + ".vue"
+  myComponentPath = "./views/" + "hard" + ".md"
+
+  console.log(currentComponent.value)
+  console.log(myComponentPath)
+  console.log(index)
+
+  const { default: myComponent } = await import(myComponentPath)
+  currentComponent.value = myComponent
+}
+
 </script>
 
+
 <template>
-  <div class="menu" :style="{ boxShadow: getBoxShadow() }">
-    <MyTree />
+  <div>
+
+    <el-container class="layout-container-demo">
+
+      <!-- 左侧菜单 -->
+      <el-aside>
+        <el-scrollbar>
+          <el-menu active-text-color="#ffd04b" @select="handleChange" default-active="1-1">
+
+            <el-sub-menu index="1">
+              <template #title>
+                <h4 class="hover-underline-animation">快速上手</h4>
+              </template>
+              <el-menu-item index="1-1">简介</el-menu-item>
+              <el-menu-item index="1-2">安装</el-menu-item>
+              <el-menu-item index="1-3">创建新项目</el-menu-item>
+              <el-menu-item index="1-4">vmiotman使用说明</el-menu-item>
+            </el-sub-menu>
+
+            <el-sub-menu index="2">
+              <template #title>
+                <h4 class="hover-underline-animation">Python基础</h4>
+              </template>
+              <el-menu-item index="2-1">一切都是对象</el-menu-item>
+              <el-menu-item index="2-2">数字类型</el-menu-item>
+              <el-menu-item index="2-3">字符串</el-menu-item>
+              <el-menu-item index="2-4">列表</el-menu-item>
+              <el-menu-item index="2-5">字典</el-menu-item>
+              <el-menu-item index="2-6">math</el-menu-item>
+              <el-menu-item index="2-7">面向过程编程</el-menu-item>
+              <el-menu-item index="2-8">面向对象编程</el-menu-item>
+              <el-menu-item index="2-9">函数式编程</el-menu-item>
+              <el-menu-item index="2-10">异常处理</el-menu-item>
+              <el-menu-item index="2-11">JSON</el-menu-item>
+              <el-menu-item index="2-12">struct</el-menu-item>
+              <el-menu-item index="2-13">google proto buffer</el-menu-item>
+              <el-menu-item index="2-14">netbitsbuf</el-menu-item>
+              <el-menu-item index="2-15">xml</el-menu-item>
+              <el-menu-item index="2-16">vmiot序列化函数</el-menu-item>
+              <el-menu-item index="2-17">哈希函数与校验函数</el-menu-item>
+              <el-menu-item index="2-18">时间函数与高精度定时器</el-menu-item>
+              <el-menu-item index="2-19">加密函数</el-menu-item>
+              <el-menu-item index="2-20">可以激活的内置全局对象</el-menu-item>
+            </el-sub-menu>
+
+          </el-menu>
+        </el-scrollbar>
+      </el-aside>
+
+      <!-- 右侧内容 -->
+      <el-container>
+
+        <!-- 头部固定标题 -->
+        <el-header style="text-align: center; font-size: 32px">
+          <div class="toolbar">
+            <span>Vmiot 学习手册</span>
+          </div>
+        </el-header>
+
+        <!-- 工具栏 -->
+        <el-header>
+          <div class="toolbar">
+            <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+            <el-button type="primary" icon="el-icon-share" size="mini">分享</el-button>
+            <el-button type="primary" icon="el-icon-download" size="mini">下载</el-button>
+            <el-button type="primary" icon="el-icon-printer" size="mini">打印</el-button>
+            <el-button type="primary" icon="el-icon-setting" size="mini">设置</el-button>
+          </div>
+        </el-header>
+
+        <!-- 内容展示 -->
+        <el-main>
+          <component :is="currentComponent" :class="currentClass" />
+        </el-main>
+
+      </el-container>
+
+    </el-container>
+
   </div>
 </template>
 
-<script>
-export default {
-  methods: {
-    getBoxShadow() {
-      return `var(--el-box-shadow-dark, 0 2px 12px 0 rgba(0, 0, 0, 0.1))`;
-    },
-  },
-};
-</script>
-
 <style scoped>
-.menu {
-  border: 2px solid rgb(237, 199, 127, 0.5);
-  border-radius: var(--el-border-radius-round, 0px);
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  overflow: auto;
-  height: 100vh;
-  background-color: #b3eeeb;
+.layout-container-demo .el-header {
+  position: static;
+  background-color: var(--el-color-primary-light-7);
+  color: var(--el-text-color-primary);
+  height: 10vh;
+  width: 80vw;
+}
 
+.layout-container-demo .el-aside {
+  color: var(--el-text-color-primary);
+  background: var(--el-color-primary-light-8);
+  height: 100vh;
+  width: 20vw;
+}
+
+.layout-container-demo .el-menu {
+  border-right: none;
+}
+
+.layout-container-demo .el-main {
+  /* padding: 0; */
+  height: 90vh;
+  width: 80vw;
+}
+
+.layout-container-demo .toolbar {
+  display: inline-flex;
+  align-items: center;
+  height: 10vh;
+}
+
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: #0087ca;
+}
+
+.hover-underline-animation::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #0087ca;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 </style>
