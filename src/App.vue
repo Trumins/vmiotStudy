@@ -6,6 +6,28 @@ let currentComponent = ref(null)
 let myComponentPath = "./resources/1-1.md"
 let currentClass = ref('newSprint')
 
+onMounted(async () => {
+  const { default: myComponent } = await import(myComponentPath)
+  currentComponent.value = myComponent
+})
+
+async function handleChange(index) {
+
+  myComponentPath = "./resources/" + index + ".md"
+
+  console.log(currentComponent.value)
+  console.log(myComponentPath)
+  console.log(index)
+
+  const { default: myComponent } = await import(myComponentPath)
+  currentComponent.value = myComponent
+}
+
+function toTop() {
+  console.log("click to top")
+  document.getElementById("content").scrollTop = 0;
+}
+
 const options = [
   {
     value: 'github',
@@ -32,28 +54,6 @@ const options = [
     label: 'simpleWhite'
   }
 ]
-
-onMounted(async () => {
-  const { default: myComponent } = await import(myComponentPath)
-  currentComponent.value = myComponent
-})
-
-async function handleChange(index) {
-
-  myComponentPath = "./resources/" + index + ".md"
-
-  console.log(currentComponent.value)
-  console.log(myComponentPath)
-  console.log(index)
-
-  const { default: myComponent } = await import(myComponentPath)
-  currentComponent.value = myComponent
-}
-
-function toTop() {
-  console.log("click to top")
-  document.getElementById("content").scrollTop = 0;
-}
 
 </script>
 
@@ -101,6 +101,54 @@ function toTop() {
               <el-menu-item index="2-18">时间函数与高精度定时器</el-menu-item>
               <el-menu-item index="2-19">加密函数</el-menu-item>
               <el-menu-item index="2-20">可以激活的内置全局对象</el-menu-item>
+            </el-sub-menu>
+
+            <el-sub-menu index="3">
+              <template #title>
+                <h4 class="hover-underline-animation">任务编程</h4>
+              </template>
+              <el-menu-item index="3-1">多任务基础</el-menu-item>
+              <el-menu-item index="3-2">任务link机制</el-menu-item>
+              <el-menu-item index="3-3">任务局部存储</el-menu-item>
+              <el-menu-item index="3-4">临界区</el-menu-item>
+              <el-menu-item index="3-5">InterLockedObject</el-menu-item>
+              <el-menu-item index="3-6">消息函数</el-menu-item>
+              <el-menu-item index="3-7">发布订阅函数</el-menu-item>
+              <el-menu-item index="3-8">消息队列函数</el-menu-item>
+            </el-sub-menu>
+
+            <el-sub-menu index="4">
+              <template #title>
+                <h4 class="hover-underline-animation">Job编程</h4>
+              </template>
+              <el-menu-item index="4-1">Job编程</el-menu-item>
+              <el-menu-item index="4-2">Job消息队列</el-menu-item>
+              <el-menu-item index="4-3">模块</el-menu-item>
+              <el-menu-item index="4-4">VMIOT模块状态与Jon状态</el-menu-item>
+            </el-sub-menu>
+
+            <el-sub-menu index="5">
+              <template #title>
+                <h4 class="hover-underline-animation">文件与IO</h4>
+              </template>
+              <el-menu-item index="5-1">基本IO函数</el-menu-item>
+              <el-menu-item index="5-2">单读多写与IO模型</el-menu-item>
+              <el-menu-item index="5-3">文件操作</el-menu-item>
+              <el-menu-item index="5-4">串口编程</el-menu-item>
+              <el-menu-item index="5-5">GPIO操作</el-menu-item>
+              <el-menu-item index="5-6">ADC操作</el-menu-item>
+              <el-menu-item index="5-7">IC操作</el-menu-item>
+              <el-menu-item index="5-8">SPI编程</el-menu-item>
+            </el-sub-menu>
+
+            <el-sub-menu index="6">
+              <template #title>
+                <h4 class="hover-underline-animation">网络编程</h4>
+              </template>
+              <el-menu-item index="6-1">基本网络编程</el-menu-item>
+              <el-menu-item index="6-2">MQTT编程</el-menu-item>
+              <el-menu-item index="6-3">HTTP编程</el-menu-item>
+              <el-menu-item index="6-4">TCP Server</el-menu-item>
             </el-sub-menu>
 
           </el-menu>
