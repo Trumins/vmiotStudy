@@ -1,9 +1,10 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import './assets/newSprint.css'
 
 let currentComponent = ref(null)
-let myComponentPath = "./views/1-1.vue"
-let currentClass = ref('github')
+let myComponentPath = "./resources/1-1.md"
+let currentClass = ref('newSprint')
 
 const options = [
   {
@@ -39,13 +40,11 @@ onMounted(async () => {
 
 async function handleChange(index) {
 
-  // myComponentPath = "./views/" + index + ".vue"
-  myComponentPath = "./views/" + "hard" + ".md"
+  myComponentPath = "./resources/" + index + ".md"
 
   console.log(currentComponent.value)
   console.log(myComponentPath)
   console.log(index)
-  console.log(currentClass.value)
 
   const { default: myComponent } = await import(myComponentPath)
   currentComponent.value = myComponent
@@ -57,7 +56,6 @@ function toTop() {
 }
 
 </script>
-
 
 <template>
   <div>
@@ -117,22 +115,20 @@ function toTop() {
           <div class="toolbar">
             <span>Vmiot 学习手册</span>
           </div>
-        </el-header>
-
-        <!-- 工具栏 -->
-        <el-header>
+          <!-- 工具栏 -->
           <div class="toolbar" style="position:relative;width: 100%;">
-            <el-select v-model="currentClass" style="width:125px">
+            <!-- 主题选择器 -->
+            <el-select v-model="currentClass" style="width:125px; position:absolute; right:11%">
               <el-option v-for="item in options" :label="item.label" :value="item.value"></el-option>
             </el-select>
+            <!-- 回到顶部 -->
             <el-button @click="toTop" style="position: absolute; right: 5%;">toTop</el-button>
           </div>
         </el-header>
 
         <!-- 内容展示 -->
         <el-main id="content">
-          <!-- <component :is="currentComponent" :class="currentClass.value" /> -->
-          <component :is="currentComponent" class="nignt" />
+          <component :is="currentComponent" class="newSprint" />
         </el-main>
 
       </el-container>
@@ -163,9 +159,9 @@ function toTop() {
 }
 
 .layout-container-demo .el-main {
-  /* padding: 0; */
-  /* height: 90vh; */
-  /* width: 85vw; */
+  padding: 70px;
+  height: 90vh;
+  width: 85vw;
 }
 
 .layout-container-demo .toolbar {
